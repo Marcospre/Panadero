@@ -11,9 +11,12 @@ class Compra
     double precio{get;set;}
     DateTime fecha_compra;
 
-    public Compra(String id, List<Pan> compra){
+    bool pagado{get;set;}
+
+    public Compra(String id, List<Pan> compra, bool pagado){
         this.idCliente = id;
         this.compra = compra;
+        this.pagado = pagado;
         this.fecha_compra = DateTime.Now;
         listar();
         calculoPrecio();
