@@ -1,8 +1,13 @@
-namespace Modelos;
-
-class Cliente
+using System;
+namespace Modelos
 {
-    private string nombre{get; set;}
-    private string apellido{get;set;}
-    private string idCliente{get;set;}
+
+
+    public class Cliente
+    {
+        public string nombre{get; set;}
+        public string apellido{get;set;}
+        public string idCliente{get;set;}
+    }
+
 }

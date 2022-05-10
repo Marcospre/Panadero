@@ -1,9 +1,11 @@
-namespace Modelos;
-
-class Pan
+using System;
+namespace Modelos
 {
-    string tipo{get;set;}
-    double precio{get;set;}
-    int cantidad{get;set;}
 
+    public class Pan
+    {
+        public string tipo{get;set;}
+        public double precio{get;set;}
+        public int cantidad{get;set;}
+    }
 }
