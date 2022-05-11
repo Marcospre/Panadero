@@ -8,7 +8,7 @@ using System.Linq;
 using Modelos;
 
 namespace Data{
-    public class DataSocioCVS : IData<Cliente>
+    public class DataClienteCVS : IData<Cliente>
     {
        string _file = "../../Cliente.csv";
 
@@ -31,11 +31,11 @@ namespace Data{
             {
                 var campos = row.Split(",");
                 var cliente = new Cliente
-                {
-                    idCliente = campos[0],
-                    nombre =  campos[1],
-                    apellido = campos[2]
-                };
+                (
+                    idCliente:campos[0],
+                    nombre:campos[1],
+                    apellido:campos[2]
+                );
                 clientes.Add(cliente);
             });
             return clientes;

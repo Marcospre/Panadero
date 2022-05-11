@@ -7,7 +7,7 @@ using System.Linq;
 namespace App
 {
 
-    class GestorDeAlmacen
+    public class GestorDeAlmacen
     {
         IData<Pan> RepoAlmacen;
         public List<Pan> Panes;
@@ -17,7 +17,16 @@ namespace App
             Panes = RepoAlmacen.Leer();
         }
 
-        public void sumarPanes();
-        public void restarPanes();
+        public void RestarPan(Pan pan, int cantidad)
+        {
+            foreach(Pan obj in Panes){
+                if(obj.tipo.Equals(pan.tipo)){
+                    obj.cantidad = obj.cantidad - cantidad;
+                }
+            }
+            RepoAlmacen.Guardar(Panes);
+        }
+
+        
     }
 }

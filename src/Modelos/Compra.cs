@@ -7,13 +7,12 @@ namespace Modelos
 
    public class Compra
     {
-        string idCliente{get;set;}
-        string lista;
-        List<Pan> compra;
-        double precio{get;set;}
-        DateTime fecha_compra;
-
-        bool pagado{get;set;}
+        public string idCliente{get;set;}
+        public string lista;
+        public List<Pan> compra;
+        public double precio{get;set;}
+        public DateTime fecha_compra;
+        public bool pagado{get;set;}
 
         public Compra(String id, List<Pan> compra, bool pagado){
             this.idCliente = id;
@@ -24,6 +23,15 @@ namespace Modelos
             listar();
             calculoPrecio();
         }
+
+        public Compra(String id, DateTime fecha, Double precio, bool pagado, string lista){
+            this.idCliente = id;
+            this.fecha_compra = fecha;
+            this.precio = precio;
+            this.pagado = pagado;
+            this.lista = lista;
+        }
+        
 
 
         public void listar(){

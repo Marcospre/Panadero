@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace App
 {
 
-    class GestorDePendientes
+    public class GestorDePendientes
     {
         IData<Compra> RepoPendientes;
         public List<Compra> Pendientes;
@@ -14,5 +14,12 @@ namespace App
             RepoPendientes = repo;
             Pendientes = RepoPendientes.Leer();
         } 
+
+
+        public void NuevaCompra(Compra nueva)
+        {
+            Pendientes.Add(nueva);
+            RepoPendientes.Guardar(Pendientes);
+        }
     }
 }

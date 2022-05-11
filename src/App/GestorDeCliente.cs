@@ -16,12 +16,12 @@ namespace App
             }
 
             public void NuevoCliente(Cliente nuevo){
-                    Clientes.Add(nuevo);
-                    RepoCliente.Guardar(Clientes);
-                }
-                public void EliminarCliente(Cliente elimi){
-                    Clientes.Remove(elimi);
-                    RepoCliente.Guardar(Clientes);
-                }
+                Clientes.Add(nuevo);
+                RepoCliente.Guardar(Clientes);
+            }
+            public void EliminarCliente(Cliente elimi){
+                Clientes.Remove(elimi);
+                RepoCliente.Guardar(Clientes);
+            }
         }
 }
