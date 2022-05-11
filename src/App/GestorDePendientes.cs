@@ -21,5 +21,39 @@ namespace App
             Pendientes.Add(nueva);
             RepoPendientes.Guardar(Pendientes);
         }
+
+        public void BorrarRegistro(Compra borrar)
+        {
+            foreach(Compra obj in Pendientes){
+                if(obj.idCompra.Equals(borrar.idCompra)){
+                    Pendientes.Remove(obj);
+                }
+            }
+            RepoPendientes.Guardar(Pendientes);
+        }
+
+        public bool buscar_cliente(Cliente cliente){
+
+            bool enc = false;
+
+            foreach(Compra obj in Pendientes){
+                if(obj.idCliente.Equals(cliente.idCliente)){
+                    enc = true;
+                }
+            }
+            return enc;
+        }
+
+        public List<Compra> obtener_pendientes(Cliente cliente){
+
+            List<Compra> p = new List<Compra>();
+
+            foreach(Compra obj in Pendientes){
+                if(obj.idCliente.Equals(cliente.idCliente)){
+                    p.Add(obj);
+                }
+            }
+            return p;
+        }
     }
 }

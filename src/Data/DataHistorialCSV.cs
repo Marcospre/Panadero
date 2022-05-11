@@ -32,11 +32,12 @@ namespace Data
                 {
                     var campos = row.Split(",");
                     var compra = new Compra(
-                        id: campos[0],
-                        fecha: DateTime.Parse(campos[1]),
-                        precio: Double.Parse(campos[2]),
-                        pagado: bool.Parse(campos[3]),
-                        lista: campos[4]
+                        id_compra: campos[0],
+                        id: campos[1],
+                        fecha: DateTime.Parse(campos[2]),
+                        precio: Double.Parse(campos[3]),
+                        pagado: bool.Parse(campos[4]),
+                        lista: campos[5]
                         
                     );
                     compras.Add(compra);

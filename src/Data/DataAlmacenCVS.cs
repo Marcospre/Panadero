@@ -19,9 +19,7 @@ namespace Data
             var str = $"{Pan.tipo},{Pan.precio},{Pan.cantidad}";
             data.Add(str);
             });
-        {
-            
-        }
+        File.WriteAllLines(_file, data);
     } 
 
     public List<Pan> Leer()

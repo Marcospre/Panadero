@@ -25,7 +25,7 @@ namespace Consola
             _casosDeUso = new Dictionary<string,Action>()
             {
                 {"Realizar compra", RealizarCompra},
-                //{"Pagar compras"},
+                {"Pagar compras",PagarCompras},
                 //{"Historial de pendientes"},
                 //{"Historial compras"},
                 {"Salir",Salir}
@@ -75,7 +75,7 @@ namespace Consola
                 while(!salir){
                     
                     Pan pan = _vista.TryObtenerElementoDeLista<Pan>("Pan",sistema_almacen.Panes,"Seleccione una opcion");
-                    var cantidad = _vista.TryObtenerDatoDeTipo<int>("Cantidad:");
+                    var cantidad = _vista.TryObtenerDatoDeTipo<int>("Cantidad");
                     if(cantidad > pan.cantidad){
                         throw new Exception("La cantidad a comprar es mayor que la almacenada");
                     }
@@ -107,10 +107,10 @@ namespace Consola
                 }
                 
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
                 
-                throw;
+                Console.WriteLine(e.Message);
             }
         }
 
@@ -136,6 +136,34 @@ namespace Consola
             }
         }
 
+        private void PagarCompras()
+        {
+            try{
+                Compra nueva_compra = null;
+                var cliente = _vista.TryObtenerElementoDeLista<Cliente>("Cliente",sistema_clientes.Clientes,"Selecciona cliente");
+                if(sistema_pendientes.buscar_cliente(cliente)){
+                    List<Compra> lista_pendientes = sistema_pendientes.obtener_pendientes(cliente);
+                    var compra = _vista.TryObtenerElementoDeLista<Compra>("Pendientes",lista_pendientes,"Seleccione una opcion");
+                    string m = compra.topendiente()+"\n"
+                            +"Desea pagar?(s/n)";
+                    _vista.Mostrar(m);
+                    var input = Console.ReadLine();
+
+                    if(input.Equals("s")){
+                        nueva_compra = new Compra(compra.idCompra,compra.idCliente,DateTime.Now,compra.precio,true,compra.lista);
+                        _vista.Mostrar("Pagado",ConsoleColor.Yellow);
+                        sistema_historial.NuevaCompra(nueva_compra);
+                        sistema_pendientes.BorrarRegistro(nueva_compra);
+                    }else{
+                        _vista.Mostrar("No Pagado",ConsoleColor.Yellow);
+                    }
+                }else{
+                    _vista.Mostrar("No tiene pagos pendientes");
+                }
+            }catch(System.Exception){
+                throw;
+            }
+        }
         private void Salir()
         {
 
