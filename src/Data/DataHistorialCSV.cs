@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Modelos;
+using System.Globalization;
 
 namespace Data
 {
@@ -17,7 +18,7 @@ namespace Data
             List<string> data = new(){ };
             compra.ForEach(Compra =>
             {
-                var str = $"{Compra.idCliente},{Compra.fecha_compra},{Compra.precio},{Compra.pagado},{Compra.lista}";
+                var str = $"{Compra.idCompra},{Compra.idCliente},{Compra.fecha_compra},{Compra.precio.ToString(CultureInfo.InvariantCulture)},{Compra.pagado},{Compra.lista}";
                 data.Add(str);
             });
             File.WriteAllLines(_file, data);
@@ -35,7 +36,7 @@ namespace Data
                         id_compra: campos[0],
                         id: campos[1],
                         fecha: DateTime.Parse(campos[2]),
-                        precio: Double.Parse(campos[3]),
+                        precio: Decimal.Parse(campos[3],CultureInfo.InvariantCulture),
                         pagado: bool.Parse(campos[4]),
                         lista: campos[5]
                         

@@ -24,11 +24,14 @@ namespace App
 
         public void BorrarRegistro(Compra borrar)
         {
+            Compra eliminar = null;
+
             foreach(Compra obj in Pendientes){
                 if(obj.idCompra.Equals(borrar.idCompra)){
-                    Pendientes.Remove(obj);
+                    eliminar = obj;
                 }
             }
+            Pendientes.Remove(eliminar);
             RepoPendientes.Guardar(Pendientes);
         }
 

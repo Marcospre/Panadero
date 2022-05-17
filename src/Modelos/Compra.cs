@@ -11,7 +11,7 @@ namespace Modelos
         public string idCliente{get;set;}
         public string lista;
         public List<Pan> compra;
-        public double precio{get;set;}
+        public decimal precio{get;set;}
         public DateTime fecha_compra;
         public bool pagado{get;set;}
 
@@ -26,7 +26,7 @@ namespace Modelos
             calculoPrecio();
         }
 
-        public Compra(String id_compra, String id, DateTime fecha, Double precio, bool pagado, string lista){
+        public Compra(String id_compra, String id, DateTime fecha, decimal precio, bool pagado, string lista){
             this.idCompra = id_compra;
             this.idCliente = id;
             this.fecha_compra = fecha;
@@ -66,10 +66,10 @@ namespace Modelos
         public string topendiente(){
             return $"El precio de {listarcompra()} es de {precio}";
         }
-
+       
         public override string ToString()
         {
-            return $"idCompra:{idCompra} idCliente:{idCliente}";
+            return $"idCompra:{idCompra} idCliente:{idCliente} Lista:{lista}";
         }
 
 

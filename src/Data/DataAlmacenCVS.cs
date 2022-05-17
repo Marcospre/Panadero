@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Modelos;
+using System.Globalization;
 
 namespace Data
 {
@@ -16,7 +17,7 @@ namespace Data
         List<string> data = new(){ };
         panes.ForEach (Pan =>
             {
-            var str = $"{Pan.tipo},{Pan.precio},{Pan.cantidad}";
+            var str = $"{Pan.tipo},{string.Format("{0:0.00}",Pan.precio)},{Pan.cantidad}";
             data.Add(str);
             });
         File.WriteAllLines(_file, data);
@@ -32,7 +33,7 @@ namespace Data
                     var pan = new Pan
                     (   
                         tipo : campos[0],
-                        precio : double.Parse(campos[1]),
+                        precio : Decimal.Parse(campos[1],CultureInfo.InvariantCulture),
                         cantidad : Int32.Parse(campos[2])
                     );
                     panes.Add(pan);

@@ -26,7 +26,7 @@ namespace Consola
             {
                 {"Realizar compra", RealizarCompra},
                 {"Pagar compras",PagarCompras},
-                //{"Historial de pendientes"},
+                {"Historial de pendientes",HistorialPendientes},
                 //{"Historial compras"},
                 {"Salir",Salir}
             };
@@ -160,8 +160,17 @@ namespace Consola
                 }else{
                     _vista.Mostrar("No tiene pagos pendientes");
                 }
-            }catch(System.Exception){
-                throw;
+            }catch(Exception e){
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        private void HistorialPendientes(){
+            try{
+                _vista.MostrarListaEnumerada<Compra>("Lista pendientes", sistema_pendientes.Pendientes);
+                
+            }catch(Exception e ){
+                Console.WriteLine(e.Message);
             }
         }
         private void Salir()
