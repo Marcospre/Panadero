@@ -17,8 +17,10 @@ namespace Data
             List<string> data = new(){ };
             pend.ForEach(Compra =>
             {
-                var str = $"{Compra.idCompra},{Compra.idCliente},{Compra.fecha_compra},{Compra.precio.ToString(CultureInfo.InvariantCulture)},{Compra.pagado},{Compra.lista}";
-                data.Add(str);
+                foreach(Pan obj in Compra.ListaCompra){
+                    var str = $"{Compra.idCompra},{Compra.idCliente},{Compra.fecha_compra},{Compra.precio.ToString(CultureInfo.InvariantCulture)},{Compra.pagado},{obj.tipo},{obj.precio},{obj.cantidad}";
+                    data.Add(str);
+                }
             });
             File.WriteAllLines(_file, data);
         }
@@ -26,20 +28,27 @@ namespace Data
 
         public List<Compra> Leer()
         {
+            Pan pan_recuperado;
+            Compra compra = null;
             List<Compra> compras = new();
             var data = File.ReadAllLines(_file).ToList();
                 data.ForEach(row =>
                 {
                     var campos = row.Split(",");
-                    var compra = new Compra(
-                        id_compra:campos[0],
-                        id: campos[1],
-                        fecha: DateTime.Parse(campos[2]),
-                        precio: Decimal.Parse(campos[3],CultureInfo.InvariantCulture),
-                        pagado: bool.Parse(campos[4]),
-                        lista: campos[5]
-                        
-                    );
+                    if(compra != null || compra.idCompra.Equals(campos[0])){
+                        pan_recuperado = new Pan(campos[5],Decimal.Parse(campos[6]),Int32.Parse(campos[7]));
+                        compra.ListaCompra.Add(pan_recuperado);
+                    }else{
+                        pan_recuperado = new Pan(campos[5],Decimal.Parse(campos[6]),Int32.Parse(campos[7]));
+                        compra = new Compra(
+                            id_compra: campos[0],
+                            id: campos[1],
+                            fecha: DateTime.Parse(campos[2]),
+                            precio: Decimal.Parse(campos[3],CultureInfo.InvariantCulture),
+                            pagado: bool.Parse(campos[4])
+                        );
+                        compra.ListaCompra.Add(pan_recuperado);
+                    }
                     compras.Add(compra);
                 });
                 return compras;

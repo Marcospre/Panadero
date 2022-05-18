@@ -17,7 +17,7 @@ namespace Data
         List<string> data = new(){ };
         panes.ForEach (Pan =>
             {
-            var str = $"{Pan.tipo},{string.Format("{0:0.00}",Pan.precio)},{Pan.cantidad}";
+            var str = $"{Pan.tipo},{Pan.precio.ToString(CultureInfo.InvariantCulture)},{Pan.cantidad}";
             data.Add(str);
             });
         File.WriteAllLines(_file, data);

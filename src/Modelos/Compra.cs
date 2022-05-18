@@ -10,29 +10,36 @@ namespace Modelos
         public string idCompra{get;set;}
         public string idCliente{get;set;}
         public string lista;
-        public List<Pan> compra;
+        public List<Pan> ListaCompra;
         public decimal precio{get;set;}
         public DateTime fecha_compra;
         public bool pagado{get;set;}
 
         public Compra(String id, List<Pan> compra, bool pagado){
             this.idCliente = id;
-            this.compra = compra;
+            this.ListaCompra = compra;
             this.pagado = pagado;
             this.fecha_compra = DateTime.Now;
-            this.compra = compra;
             this.idCompra = generarCodigo();
             listar();
             calculoPrecio();
         }
 
-        public Compra(String id_compra, String id, DateTime fecha, decimal precio, bool pagado, string lista){
+        public Compra(String id_compra, String id, DateTime fecha, decimal precio, bool pagado){
             this.idCompra = id_compra;
             this.idCliente = id;
             this.fecha_compra = fecha;
             this.precio = precio;
             this.pagado = pagado;
-            this.lista = lista;
+        }
+
+        public Compra(String id_compra, String id, DateTime fecha, decimal precio, bool pagado, List<Pan> lista){
+            this.idCompra = id_compra;
+            this.idCliente = id;
+            this.fecha_compra = fecha;
+            this.precio = precio;
+            this.pagado = pagado;
+            this.ListaCompra = lista;
         }
         
 
@@ -42,13 +49,13 @@ namespace Modelos
             return $"{idCliente}{fecha_compra.Day}";
         }
         public void listar(){
-            foreach(Pan obj in compra){
+            foreach(Pan obj in ListaCompra){
                 lista = lista + $"{obj.tipo}:{obj.cantidad} ";
             }
         }
 
         public void calculoPrecio(){
-        foreach(Pan obj in compra){
+        foreach(Pan obj in ListaCompra){
                 precio = precio + obj.precio*obj.cantidad;
             } 
         }
@@ -56,7 +63,7 @@ namespace Modelos
         public string listarcompra(){
             string m="";
 
-            foreach(Pan obj in compra){
+            foreach(Pan obj in ListaCompra){
                 m = m +obj.cantidad + obj.tipo;
             }
 

@@ -27,7 +27,7 @@ namespace Consola
                 {"Realizar compra", RealizarCompra},
                 {"Pagar compras",PagarCompras},
                 {"Historial de pendientes",HistorialPendientes},
-                //{"Historial compras"},
+                {"Historial compras",HistorialCompras},
                 {"Salir",Salir}
             };
         }
@@ -150,7 +150,7 @@ namespace Consola
                     var input = Console.ReadLine();
 
                     if(input.Equals("s")){
-                        nueva_compra = new Compra(compra.idCompra,compra.idCliente,DateTime.Now,compra.precio,true,compra.lista);
+                        nueva_compra = new Compra(compra.idCompra,compra.idCliente,DateTime.Now,compra.precio,true,compra.ListaCompra);
                         _vista.Mostrar("Pagado",ConsoleColor.Yellow);
                         sistema_historial.NuevaCompra(nueva_compra);
                         sistema_pendientes.BorrarRegistro(nueva_compra);
@@ -173,6 +173,32 @@ namespace Consola
                 Console.WriteLine(e.Message);
             }
         }
+
+       
+        private void HistorialCompras()
+        {
+            //Compra compra = null;
+           // Compra compra_ante = null;
+            _vista.Mostrar("Historial Compras", ConsoleColor.Yellow);
+            Console.WriteLine();
+
+            for(int i = 0 ; i < sistema_historial.Historial_Compras.Count; i++)
+            {
+
+                _vista.MostrarListaEnumerada<Pan>($" Compra:{sistema_historial.Historial_Compras[i].idCompra}",sistema_historial.Historial_Compras[i].ListaCompra);
+                /*compra = sistema_historial.Historial_Compras[i];
+                if(compra.idCompra.Equals(compra_ante)){
+                    _vista.Mostrar($"Compra:{sistema_historial.Historial_Compras[i].idCompra}", ConsoleColor.DarkBlue);
+                }else{
+                    _vista.MostrarListaEnumerada<Pan>()
+                }
+
+                compra_ante = compra;*/
+
+            }
+
+        }
+        
         private void Salir()
         {
 

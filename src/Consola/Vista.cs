@@ -38,7 +38,7 @@ namespace Consola
             }
             WriteLine();
         }
-       
+
         // ===== METODOS DE CAPTURA DE INFORMACION =====
         // Refactoring C# Generics, Reflexion, PatternMaching, Tuples,
         public T TryObtenerDatoDeTipo<T>(string prompt, string @default = "")
