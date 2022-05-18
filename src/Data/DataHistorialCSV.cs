@@ -19,7 +19,7 @@ namespace Data
             compras.ForEach(Compra =>
             {
                 foreach(Pan obj in Compra.ListaCompra){
-                    var str = $"{Compra.idCompra},{Compra.idCliente},{Compra.fecha_compra},{Compra.precio.ToString(CultureInfo.InvariantCulture)},{Compra.pagado},{obj.tipo},{obj.precio},{obj.cantidad}";
+                    var str = $"{Compra.idCompra},{Compra.idCliente},{Compra.fecha_compra},{Compra.precio.ToString(CultureInfo.InvariantCulture)},{Compra.pagado},{obj.tipo},{obj.precio.ToString(CultureInfo.InvariantCulture)},{obj.cantidad}";
                     data.Add(str);
                 }
             });
@@ -37,11 +37,11 @@ namespace Data
                 {
                     var campos = row.Split(",");
                     
-                    if(compra != null || compra.idCompra.Equals(campos[0])){
-                        pan_recuperado = new Pan(campos[5],Decimal.Parse(campos[6]),Int32.Parse(campos[7]));
+                    if(compra != null && compra.idCompra.Equals(campos[0])){
+                        pan_recuperado = new Pan(campos[5],Decimal.Parse(campos[6],CultureInfo.InvariantCulture),Int32.Parse(campos[7]));
                         compra.ListaCompra.Add(pan_recuperado);
                     }else{
-                        pan_recuperado = new Pan(campos[5],Decimal.Parse(campos[6]),Int32.Parse(campos[7]));
+                        pan_recuperado = new Pan(campos[5],Decimal.Parse(campos[6],CultureInfo.InvariantCulture),Int32.Parse(campos[7]));
                         compra = new Compra(
                             id_compra: campos[0],
                             id: campos[1],
