@@ -31,6 +31,7 @@ namespace Modelos
             this.fecha_compra = fecha;
             this.precio = precio;
             this.pagado = pagado;
+            this.ListaCompra = new List<Pan>();
         }
 
         public Compra(String id_compra, String id, DateTime fecha, decimal precio, bool pagado, List<Pan> lista){

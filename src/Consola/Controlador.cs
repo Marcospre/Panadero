@@ -164,16 +164,6 @@ namespace Consola
                 Console.WriteLine(e.Message);
             }
         }
-
-        private void HistorialPendientes(){
-            try{
-                _vista.MostrarListaEnumerada<Compra>("Lista pendientes", sistema_pendientes.Pendientes);
-                
-            }catch(Exception e ){
-                Console.WriteLine(e.Message);
-            }
-        }
-
        
         private void HistorialCompras()
         {
@@ -186,6 +176,30 @@ namespace Consola
             {
 
                 _vista.MostrarListaEnumerada<Pan>($" Compra:{sistema_historial.Historial_Compras[i].idCompra}",sistema_historial.Historial_Compras[i].ListaCompra);
+                /*compra = sistema_historial.Historial_Compras[i];
+                if(compra.idCompra.Equals(compra_ante)){
+                    _vista.Mostrar($"Compra:{sistema_historial.Historial_Compras[i].idCompra}", ConsoleColor.DarkBlue);
+                }else{
+                    _vista.MostrarListaEnumerada<Pan>()
+                }
+
+                compra_ante = compra;*/
+
+            }
+
+        }
+
+        private void HistorialPendientes()
+        {
+            //Compra compra = null;
+           // Compra compra_ante = null;
+            _vista.Mostrar("Historial Pendientes", ConsoleColor.Yellow);
+            Console.WriteLine();
+
+            for(int i = 0 ; i < sistema_pendientes.Pendientes.Count; i++)
+            {
+
+                _vista.MostrarListaEnumerada<Pan>($" Compra:{sistema_pendientes.Pendientes[i].idCompra}",sistema_pendientes.Pendientes[i].ListaCompra);
                 /*compra = sistema_historial.Historial_Compras[i];
                 if(compra.idCompra.Equals(compra_ante)){
                     _vista.Mostrar($"Compra:{sistema_historial.Historial_Compras[i].idCompra}", ConsoleColor.DarkBlue);

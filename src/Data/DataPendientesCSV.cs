@@ -35,11 +35,11 @@ namespace Data
                 data.ForEach(row =>
                 {
                     var campos = row.Split(",");
-                    if(compra != null || compra.idCompra.Equals(campos[0])){
-                        pan_recuperado = new Pan(campos[5],Decimal.Parse(campos[6]),Int32.Parse(campos[7]));
+                    if(compra != null && compra.idCompra.Equals(campos[0])){
+                        pan_recuperado = new Pan((Tipo)Enum.Parse(typeof(Tipo),campos[5]),Decimal.Parse(campos[6]),Int32.Parse(campos[7]));
                         compra.ListaCompra.Add(pan_recuperado);
                     }else{
-                        pan_recuperado = new Pan(campos[5],Decimal.Parse(campos[6]),Int32.Parse(campos[7]));
+                        pan_recuperado = new Pan((Tipo)Enum.Parse(typeof(Tipo),campos[5]),Decimal.Parse(campos[6]),Int32.Parse(campos[7]));
                         compra = new Compra(
                             id_compra: campos[0],
                             id: campos[1],

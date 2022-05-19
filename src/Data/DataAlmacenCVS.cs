@@ -32,7 +32,7 @@ namespace Data
                     var campos = row.Split(",");
                     var pan = new Pan
                     (   
-                        tipo : campos[0],
+                        tipo : (Tipo)Enum.Parse((typeof(Tipo)),campos[0]),
                         precio : Decimal.Parse(campos[1],CultureInfo.InvariantCulture),
                         cantidad : Int32.Parse(campos[2])
                     );
