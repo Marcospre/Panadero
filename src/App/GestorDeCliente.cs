@@ -23,5 +23,29 @@ namespace App
                 Clientes.Remove(elimi);
                 RepoCliente.Guardar(Clientes);
             }
+
+            public Cliente DevolverCliente(string id)
+            {
+                Cliente cliente_devuelto = null;
+                foreach(Cliente obj in Clientes)
+                {
+                    if(obj.idCliente.Equals(id))
+                        cliente_devuelto = obj;
+                }
+
+                return cliente_devuelto;
+            }
+
+            public bool BuscarCliente(string id)
+            {
+                bool res = false;
+                foreach(Cliente obj in Clientes)
+                {
+                    if(obj.idCliente.Equals(id))
+                        res = true;
+                }
+
+                return res;
+            }
         }
 }

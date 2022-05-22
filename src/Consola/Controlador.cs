@@ -26,8 +26,10 @@ namespace Consola
             {
                 {"Realizar compra", RealizarCompra},
                 {"Pagar compras",PagarCompras},
+                {"Rellenar almacen",RellenarAlmacen},
                 {"Historial de pendientes",HistorialPendientes},
                 {"Historial compras",HistorialCompras},
+                {"Visualizar Almacen",VisualizarAlmacen},
                 {"Salir",Salir}
             };
         }
@@ -67,11 +69,14 @@ namespace Consola
                 
                 var input = _vista.TryObtenerValorEnRangoInt(1, menu_cliente.Count, "Seleccione una opcion");
                 Cliente cliente;
-                if(input == 1 )
+                if(input == 1 ){
                     cliente = NuevoCliente();
-                else
+                }else{
+                    if(sistema_clientes.Clientes.Count == 0){
+                        throw new Exception("No hay clientes registrados");
+                    }
                     cliente = _vista.TryObtenerElementoDeLista<Cliente>("Clientes",sistema_clientes.Clientes,"Seleccione un cliente");
-                
+                }
                 while(!salir){
                     
                     Pan pan = _vista.TryObtenerElementoDeLista<Pan>("Pan",sistema_almacen.Panes,"Seleccione una opcion");
@@ -80,15 +85,18 @@ namespace Consola
                         throw new Exception("La cantidad a comprar es mayor que la almacenada");
                     }
 
-                    Pan nuevo_pan = new Pan(pan.tipo,pan.precio,cantidad);
-                    sistema_almacen.RestarPan(nuevo_pan,nuevo_pan.cantidad);
-                    lista_panes.Add(nuevo_pan);
-                    
                     Console.Write("Desea comprar mas?(s/n):");
                     var res = Console.ReadLine();
+                    if(!res.Equals("s") && !res.Equals("n")){
+                        throw new Exception("Entrada mo permitida");
+                    }
 
                     if(res.Equals("n"))
                         salir = true;
+
+                    Pan nuevo_pan = new Pan(pan.tipo,pan.precio,cantidad);
+                    sistema_almacen.RestarPan(nuevo_pan,nuevo_pan.cantidad);
+                    lista_panes.Add(nuevo_pan);
 
                 }
 
@@ -96,6 +104,10 @@ namespace Consola
 
                 Console.Write("Pagar ahora o mas tarde?(a/m):");
                 var res1 = Console.ReadLine();
+                if(!res1.Equals("a") && !res1.Equals("m")){
+                    sistema_almacen.RestaurarPanes(lista_panes);
+                    throw new Exception("Entrada no permitida");
+                }
                 if(res1.Equals("a")){
                     nueva_compra = new Compra(cliente.idCliente,lista_panes,true);
                     _vista.Mostrar("Pagado",ConsoleColor.Yellow);
@@ -107,10 +119,9 @@ namespace Consola
                 }
                 
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                
-                Console.WriteLine(e.Message);
+                _vista.Mostrar(e.Message, ConsoleColor.DarkRed);
             }
         }
 
@@ -118,6 +129,9 @@ namespace Consola
         {
             try{
                 var idCliente = _vista.TryObtenerDatoDeTipo<string>("idCliente");
+                if(sistema_clientes.BuscarCliente(idCliente)){
+                    throw new Exception("Id duplicado");
+                }
                 var nom = _vista.TryObtenerDatoDeTipo<string>("Nombre");
                 var ape = _vista.TryObtenerDatoDeTipo<string>("Apellido");
 
@@ -148,6 +162,9 @@ namespace Consola
                             +"Desea pagar?(s/n)";
                     _vista.Mostrar(m);
                     var input = Console.ReadLine();
+                    if(!input.Equals("s") && !input.Equals("n")){
+                        throw new Exception("Entrada no permitida");
+                    }
 
                     if(input.Equals("s")){
                         nueva_compra = new Compra(compra.idCompra,compra.idCliente,DateTime.Now,compra.precio,true,compra.ListaCompra);
@@ -174,8 +191,8 @@ namespace Consola
 
             for(int i = 0 ; i < sistema_historial.Historial_Compras.Count; i++)
             {
-
-                _vista.MostrarListaEnumerada<Pan>($" Compra:{sistema_historial.Historial_Compras[i].idCompra}",sistema_historial.Historial_Compras[i].ListaCompra);
+                Cliente cliente = sistema_clientes.DevolverCliente(sistema_historial.Historial_Compras[i].idCliente);
+               _vista.MostrarListaEnumerada<Pan>($" Compra: cliente;{cliente.nombre} fecha:{sistema_historial.Historial_Compras[i].fecha_compra}",sistema_historial.Historial_Compras[i].ListaCompra);
                 /*compra = sistema_historial.Historial_Compras[i];
                 if(compra.idCompra.Equals(compra_ante)){
                     _vista.Mostrar($"Compra:{sistema_historial.Historial_Compras[i].idCompra}", ConsoleColor.DarkBlue);
@@ -195,11 +212,13 @@ namespace Consola
            // Compra compra_ante = null;
             _vista.Mostrar("Historial Pendientes", ConsoleColor.Yellow);
             Console.WriteLine();
+            Cliente cliente_dev = null;
 
             for(int i = 0 ; i < sistema_pendientes.Pendientes.Count; i++)
             {
 
-                _vista.MostrarListaEnumerada<Pan>($" Compra:{sistema_pendientes.Pendientes[i].idCompra}",sistema_pendientes.Pendientes[i].ListaCompra);
+                cliente_dev = sistema_clientes.DevolverCliente(sistema_pendientes.Pendientes[i].idCliente);
+                _vista.MostrarListaEnumerada<Pan>($" Compra: cliente:{cliente_dev.nombre} fecha:{sistema_pendientes.Pendientes[i].fecha_compra} ",sistema_pendientes.Pendientes[i].ListaCompra);
                 /*compra = sistema_historial.Historial_Compras[i];
                 if(compra.idCompra.Equals(compra_ante)){
                     _vista.Mostrar($"Compra:{sistema_historial.Historial_Compras[i].idCompra}", ConsoleColor.DarkBlue);
@@ -213,6 +232,19 @@ namespace Consola
 
         }
         
+        private void RellenarAlmacen()
+        {
+            var pan = _vista.TryObtenerElementoDeLista<Pan>("Lista de panes",sistema_almacen.Panes,"Selecciona pan a rellenar");
+            var numero = _vista.TryObtenerDatoDeTipo<int>("Inserte una cantidad");
+
+            sistema_almacen.SumarPan(pan,numero);
+
+        }
+
+        private void VisualizarAlmacen()
+        {
+            _vista.MostrarListaEnumerada<Pan>("Almacen",sistema_almacen.Panes);
+        }
         private void Salir()
         {
 

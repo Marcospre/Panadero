@@ -7,7 +7,6 @@ namespace Modelos
         Baguette,
         Integral,
         Gallego,
-
         Centeno
     }
     public class Pan

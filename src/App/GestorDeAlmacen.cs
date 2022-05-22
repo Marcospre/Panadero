@@ -27,6 +27,23 @@ namespace App
             RepoAlmacen.Guardar(Panes);
         }
 
+        public void SumarPan(Pan pan, int cantidad)
+        {
+            foreach(Pan obj in Panes){
+                if(obj.tipo.Equals(pan.tipo)){
+                    obj.cantidad = obj.cantidad + cantidad;
+                }
+            }
+            RepoAlmacen.Guardar(Panes);
+
+        }
+
+        public void RestaurarPanes(List<Pan> compra){
+            foreach(Pan obj in compra){
+                SumarPan(obj,obj.cantidad);
+            }
+        }
+
         
     }
 }

@@ -11,7 +11,7 @@ namespace Modelos
         public string idCliente{get;set;}
         public string lista;
         public List<Pan> ListaCompra;
-        public decimal precio{get;set;}
+        public Decimal precio{get;set;}
         public DateTime fecha_compra;
         public bool pagado{get;set;}
 
@@ -25,7 +25,7 @@ namespace Modelos
             calculoPrecio();
         }
 
-        public Compra(String id_compra, String id, DateTime fecha, decimal precio, bool pagado){
+        public Compra(String id_compra, String id, DateTime fecha, Decimal precio, bool pagado){
             this.idCompra = id_compra;
             this.idCliente = id;
             this.fecha_compra = fecha;
@@ -34,7 +34,7 @@ namespace Modelos
             this.ListaCompra = new List<Pan>();
         }
 
-        public Compra(String id_compra, String id, DateTime fecha, decimal precio, bool pagado, List<Pan> lista){
+        public Compra(String id_compra, String id, DateTime fecha, Decimal precio, bool pagado, List<Pan> lista){
             this.idCompra = id_compra;
             this.idCliente = id;
             this.fecha_compra = fecha;
@@ -47,7 +47,7 @@ namespace Modelos
 
 
         public string generarCodigo(){
-            return $"{idCliente}{fecha_compra.Day}";
+            return Guid.NewGuid().ToString();
         }
         public void listar(){
             foreach(Pan obj in ListaCompra){
@@ -65,14 +65,14 @@ namespace Modelos
             string m="";
 
             foreach(Pan obj in ListaCompra){
-                m = m +obj.cantidad + obj.tipo;
+                m = m +" "+obj.cantidad +" "+ obj.tipo;
             }
 
             return m;
         }
 
         public string topendiente(){
-            return $"El precio de {listarcompra()} es de {precio}";
+            return $"El precio de {listarcompra()} es de {precio} €";
         }
        
         public override string ToString()
