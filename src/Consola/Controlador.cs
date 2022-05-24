@@ -224,11 +224,6 @@ namespace Consola
         {
             _vista.MostrarListaEnumerada<Pan>("Almacen",sistema_almacen.Panes);
         }
-        private void Salir()
-        {
-
-        }
-
-        
+     
     }
 }
