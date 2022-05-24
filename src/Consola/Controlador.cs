@@ -25,12 +25,11 @@ namespace Consola
             _casosDeUso = new Dictionary<string,Action>()
             {
                 {"Realizar compra", RealizarCompra},
-                {"Pagar compras",PagarCompras},
+                {"Pagar pendientes",PagarPendientes},
                 {"Rellenar almacen",RellenarAlmacen},
                 {"Historial de pendientes",HistorialPendientes},
                 {"Historial compras",HistorialCompras},
-                {"Visualizar Almacen",VisualizarAlmacen},
-                {"Salir",Salir}
+                {"Visualizar Almacen",VisualizarAlmacen}
             };
         }
 
@@ -60,7 +59,7 @@ namespace Consola
             List<string> menu_cliente = new List<string>
             {
                 "Nuevo Cliente",
-                "Registrarse"
+                "Elegir un cliente registrado"
             };
            
             _vista.MostrarListaEnumerada("Cliente",menu_cliente);
@@ -150,7 +149,7 @@ namespace Consola
             }
         }
 
-        private void PagarCompras()
+        private void PagarPendientes()
         {
             try{
                 Compra nueva_compra = null;
@@ -184,32 +183,20 @@ namespace Consola
        
         private void HistorialCompras()
         {
-            //Compra compra = null;
-           // Compra compra_ante = null;
             _vista.Mostrar("Historial Compras", ConsoleColor.Yellow);
             Console.WriteLine();
 
             for(int i = 0 ; i < sistema_historial.Historial_Compras.Count; i++)
             {
                 Cliente cliente = sistema_clientes.DevolverCliente(sistema_historial.Historial_Compras[i].idCliente);
-               _vista.MostrarListaEnumerada<Pan>($" Compra: cliente;{cliente.nombre} fecha:{sistema_historial.Historial_Compras[i].fecha_compra}",sistema_historial.Historial_Compras[i].ListaCompra);
-                /*compra = sistema_historial.Historial_Compras[i];
-                if(compra.idCompra.Equals(compra_ante)){
-                    _vista.Mostrar($"Compra:{sistema_historial.Historial_Compras[i].idCompra}", ConsoleColor.DarkBlue);
-                }else{
-                    _vista.MostrarListaEnumerada<Pan>()
-                }
-
-                compra_ante = compra;*/
-
+               _vista.MostrarListaEnumerada<Pan>($" Compra: cliente:{cliente.nombre} fecha:{sistema_historial.Historial_Compras[i].fecha_compra}",sistema_historial.Historial_Compras[i].ListaCompra);
+               
             }
 
         }
 
         private void HistorialPendientes()
         {
-            //Compra compra = null;
-           // Compra compra_ante = null;
             _vista.Mostrar("Historial Pendientes", ConsoleColor.Yellow);
             Console.WriteLine();
             Cliente cliente_dev = null;
@@ -219,15 +206,7 @@ namespace Consola
 
                 cliente_dev = sistema_clientes.DevolverCliente(sistema_pendientes.Pendientes[i].idCliente);
                 _vista.MostrarListaEnumerada<Pan>($" Compra: cliente:{cliente_dev.nombre} fecha:{sistema_pendientes.Pendientes[i].fecha_compra} ",sistema_pendientes.Pendientes[i].ListaCompra);
-                /*compra = sistema_historial.Historial_Compras[i];
-                if(compra.idCompra.Equals(compra_ante)){
-                    _vista.Mostrar($"Compra:{sistema_historial.Historial_Compras[i].idCompra}", ConsoleColor.DarkBlue);
-                }else{
-                    _vista.MostrarListaEnumerada<Pan>()
-                }
-
-                compra_ante = compra;*/
-
+              
             }
 
         }
