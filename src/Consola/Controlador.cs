@@ -186,7 +186,7 @@ namespace Consola
             _vista.Mostrar("Historial Compras", ConsoleColor.Yellow);
             Console.WriteLine();
 
-            for(int i = 0 ; i < sistema_historial.Historial_Compras.Count; i++)
+            for(int i = 0 ; i < sistema_historial.ContarCompras(); i++)
             {
                 Cliente cliente = sistema_clientes.DevolverCliente(sistema_historial.Historial_Compras[i].idCliente);
                _vista.MostrarListaEnumerada<Pan>($" Compra: cliente:{cliente.nombre} fecha:{sistema_historial.Historial_Compras[i].fecha_compra}",sistema_historial.Historial_Compras[i].ListaCompra);

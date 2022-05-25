@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "ThQsspZrvy+gznrdBJbH3EULLaqZV2RanCz57Jy6rKRvwN8UDF0fFFWsKfTw3bUahm6BS+928RaFqPDfpRe7SQ==",
+  "dgSpecHash": "mKpCSFam6yn/5PuWwaBuB1jEvuA+XlawDUhMNxtqjDt0gN5LQ8R+m6Sp6n25ik10Py4pK3QbAJ46ye/9/ZTu2A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Marcos\\Documents\\DAW\\ED\\Panadero\\src\\Consola\\Consola.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\1daw3\\Documents\\ED\\Panadero\\src\\Consola\\Consola.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\1daw3\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.15\\microsoft.netcore.app.host.win-x64.5.0.15.nupkg.sha512"
+  ],
   "logs": []
 }

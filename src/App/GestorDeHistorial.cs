@@ -21,5 +21,21 @@ namespace App
             Historial_Compras.Add(nueva);
             RepoHistorial.Guardar(Historial_Compras);
         }
+
+        public int ContarCompras()
+        {
+            string id = Historial_Compras[0].idCompra;
+            int cont = 1;
+
+            foreach(Compra obj in Historial_Compras)
+            {
+                if(obj.idCompra != id){
+                    cont++;
+                    id = obj.idCompra;
+                }
+            }
+
+            return cont;
+        }
     }
 }
