@@ -18,7 +18,7 @@ namespace Data
             pend.ForEach(Compra =>
             {
                 foreach(Pan obj in Compra.ListaCompra){
-                    var str = $"{Compra.idCompra},{Compra.idCliente},{Compra.fecha_compra},{Compra.precio.ToString(CultureInfo.InvariantCulture)},{Compra.pagado},{obj.tipo},{obj.precio},{obj.cantidad}";
+                    var str = $"{Compra.idCompra},{Compra.idCliente},{Compra.fecha_compra},{Compra.precio.ToString(CultureInfo.InvariantCulture)},{Compra.pagado},{obj.tipo},{obj.precio.ToString(CultureInfo.InvariantCulture)},{obj.cantidad}";
                     data.Add(str);
                 }
             });
@@ -32,14 +32,21 @@ namespace Data
             Compra compra = null;
             List<Compra> compras = new();
             var data = File.ReadAllLines(_file).ToList();
+            var last_row  = data.TakeLast(1).FirstOrDefault();
                 data.ForEach(row =>
                 {
                     var campos = row.Split(",");
                     if(compra != null && compra.idCompra.Equals(campos[0])){
-                        pan_recuperado = new Pan((Tipo)Enum.Parse(typeof(Tipo),campos[5]),Decimal.Parse(campos[6]),Int32.Parse(campos[7]));
+                        pan_recuperado = new Pan((Tipo)Enum.Parse(typeof(Tipo),campos[5]),Decimal.Parse(campos[6],CultureInfo.InvariantCulture),Int32.Parse(campos[7]));
                         compra.ListaCompra.Add(pan_recuperado);
+                        if(row.Equals(last_row)){
+                            compras.Add(compra);
+                        }
                     }else{
-                        pan_recuperado = new Pan((Tipo)Enum.Parse(typeof(Tipo),campos[5]),Decimal.Parse(campos[6]),Int32.Parse(campos[7]));
+                        if(compra != null && !compra.idCompra.Equals(campos[0])){
+                            compras.Add(compra);
+                        }
+                        pan_recuperado = new Pan((Tipo)Enum.Parse(typeof(Tipo),campos[5]),Decimal.Parse(campos[6],CultureInfo.InvariantCulture),Int32.Parse(campos[7]));
                         compra = new Compra(
                             id_compra: campos[0],
                             id: campos[1],
@@ -48,8 +55,11 @@ namespace Data
                             pagado: bool.Parse(campos[4])
                         );
                         compra.ListaCompra.Add(pan_recuperado);
+                        if(row.Equals(last_row)){
+                            compras.Add(compra);
+                        }
                     }
-                    compras.Add(compra);
+
                 });
                 return compras;
         }

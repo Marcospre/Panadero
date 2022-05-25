@@ -56,5 +56,26 @@ El metodo guardar transcribe la informacion que se le pasa en una lista a un str
 
 ## **Menu principal**
 ![](imagenes/menu_principal.png)
-## **
+## **Realizar Compra**
+![](imagenes/seleccioncliente.png)
 
+![](imagenes/seleccionpan.png)
+
+![](imagenes/pagarmastarde.png)
+## **Pagar Pendientes**
+![](imagenes/pagopendientes.png)
+## **Historial Pendientes**
+![](imagenes/visualizarpendientes.png)
+## **Historial Compras**
+![](imagenes/historial.png)
+## **Rellenar Almacen**
+![](imagenes/rellenaralmacen.png)
+
+## **Conclusion**
+
+El proyecto ha tenido ciertas complicaciones que ha habido que resolver. Tambien, he dispuesto de menos tiempo para realizarlo (causa de otros proyectos a realizar), por tanto, no estoy muy satisfecho con la implementacion de algunos metodos o formas de estructurar el programa que podrian haber sido mas eficientes.
+
+Puntos o problemas a tener en cuenta:
+* Cuando se realizan compras que contienen mas de un tipo de pan, he tenido que crear una lista en cada compra para guardar todos los tipos de pan que se compran. Sin embargo, a la hora de guardar la compra en el CSV, se guarda cada pan comprado como una linea. Por tanto, cuando se vuelve a leer el CSV se reordenan todos los panes de una compra en un sola lista de compra.
+* Para la implementacion del codigo de la compra, he utilizado una clase lamada GUid que genera codigos aleatorios.
+* Para guardar la informacion de cantidad de panes, he creado una variable entera dentro de la clase pan. Esta variable sirve tanto para guardar el numero de panes que se compran como para guardar el numero de panes alamcenados en el almacen.

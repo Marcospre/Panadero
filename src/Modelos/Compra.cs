@@ -32,6 +32,7 @@ namespace Modelos
             this.precio = precio;
             this.pagado = pagado;
             this.ListaCompra = new List<Pan>();
+            listar();
         }
 
         public Compra(String id_compra, String id, DateTime fecha, Decimal precio, bool pagado, List<Pan> lista){
@@ -41,6 +42,7 @@ namespace Modelos
             this.precio = precio;
             this.pagado = pagado;
             this.ListaCompra = lista;
+            listar();
         }
         
 
@@ -72,12 +74,12 @@ namespace Modelos
         }
 
         public string topendiente(){
-            return $"El precio de {listarcompra()} es de {precio} €";
+            return $"El precio de {listarcompra()} es de {precio} ";
         }
        
         public override string ToString()
         {
-            return $"idCompra:{idCompra} idCliente:{idCliente} Lista:{lista}";
+            return $"idCompra:{idCompra} idCliente:{idCliente} Fecha:{fecha_compra}";
         }
 
 

@@ -17,7 +17,7 @@ namespace App
         }
 
         public void NuevaCompra(Compra nueva)
-        {
+        {   
             Historial_Compras.Add(nueva);
             RepoHistorial.Guardar(Historial_Compras);
         }
